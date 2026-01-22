@@ -1,5 +1,6 @@
 // UserHomePage.tsx
 import type { UserData } from '../types';
+import NewIssue from '../components/NewIssue';
 
 type UserHomePageProps = {
 	logOut: () => void;
@@ -9,7 +10,7 @@ type UserHomePageProps = {
 export default function UserHomePage({ logOut, userData }: UserHomePageProps) {
 	return (
 		<>
-			<h1>Hello {userData?.name}. We have the access token.</h1>
+			<NewIssue />
 			<button onClick={logOut}>Log Out</button>
 		</>
 	);

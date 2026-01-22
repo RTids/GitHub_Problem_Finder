@@ -2,6 +2,7 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import UserHomePage from './routes/UserHomePage';
 import NavBar from './components/NavBar';
+import getUserData from './api/getUserData';
 
 const clientID = import.meta.env.VITE_GITHUB_CLIENT_ID;
 
@@ -41,7 +42,6 @@ function App() {
 						return response.json();
 					})
 					.then((data) => {
-						console.log(data);
 						if (data.access_token) {
 							localStorage.setItem('accessToken', data.access_token);
 							setAccessToken(data.access_token);
@@ -56,21 +56,9 @@ function App() {
 		if (!accessToken) return;
 
 		async function fetchUserData() {
-			await fetch(`${import.meta.env.VITE_API_BASE_URL}/getUserData`, {
-				method: 'GET',
-				headers: {
-					Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
-				},
-			})
-				.then((response) => {
-					return response.json();
-				})
-				.then((data) => {
-					console.log(data);
-					setUserData(data);
-				});
+			const data = await getUserData();
+			setUserData(data);
 		}
-
 		fetchUserData();
 	}, [accessToken]);
 

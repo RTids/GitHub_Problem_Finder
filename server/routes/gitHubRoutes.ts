@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { getAccessToken } from '../controllers/getAccessTokenController.ts';
 import { getUserData } from '../controllers/getUserDataController.ts';
-import { getIssueByLabe } from '../controllers/getIssueByLabelController.ts'
+import { getIssueByLabel } from '../controllers/getIssueByLabelController.ts'
 
 const router = Router();
 
