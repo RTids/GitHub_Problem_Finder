@@ -11,7 +11,10 @@ export const getIssueByLabel = async (req: any, res: any) => {
 	});
 	const cached = await redis.get(language.toLowerCase());
 
-	if (cached) return res.json(JSON.parse(cached));
+	if (cached) {
+		console.log('Fetching from cache');
+		return res.json(JSON.parse(cached));
+	}
 
 	if (!authHeader) {
 		return res.status(401).json({ message: 'Missing Authorization header' });

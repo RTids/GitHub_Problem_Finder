@@ -10,7 +10,7 @@ export default function NewIssue() {
 
 	useEffect(() => {
 		async function fetchIssueData() {
-			// const issues = await getIssueByLabel();
+			const issues = await getIssueByLabel();
 			console.log(issues);
 		}
 		fetchIssueData();
