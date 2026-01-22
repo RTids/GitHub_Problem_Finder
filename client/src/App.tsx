@@ -1,6 +1,7 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import UserHomePage from './routes/UserHomePage';
+import NavBar from './components/NavBar';
 
 const clientID = import.meta.env.VITE_GITHUB_CLIENT_ID;
 
@@ -79,8 +80,8 @@ function App() {
 	};
 
 	return (
-		<div>
-			<header>Welcome to GitHub Problem Finder</header>
+		<div className='w-full flex flex-col justify-center items-center'>
+			<NavBar userData={userData} logOut={logOut} />
 			{accessToken ? (
 				<UserHomePage logOut={logOut} userData={userData} />
 			) : (
