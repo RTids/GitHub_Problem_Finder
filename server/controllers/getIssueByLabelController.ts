@@ -3,11 +3,19 @@ import Redis from 'ioredis';
 
 const redis = new Redis();
 
+//Make sure to start redis server locally in local terminal using redis-server
+//When deploying we can use Heroku to set this up
+
 export const getIssueByLabel = async (req: any, res: any) => {
 	const authHeader = req.get('Authorization');
 	const { language } = req.query;
 	const params = new URLSearchParams({
-		q: `language:${language} is:public good-first-issues:>1`,
+		q: [
+			`language:${language}`,
+			'label:"good first issue"',
+			'state:open',
+			'is:issue',
+		].join(' '),
 	});
 	const cached = await redis.get(language.toLowerCase());
 
@@ -22,11 +30,12 @@ export const getIssueByLabel = async (req: any, res: any) => {
 
 	try {
 		const response = await fetch(
-			'https://api.github.com/search/repositories?' + params,
+			'https://api.github.com/search/issues?' + params,
 			{
 				headers: {
 					Authorization: authHeader,
 					Accept: 'application/vnd.github+json',
+					'User-Agent': 'easy-issues-finder',
 				},
 			},
 		);

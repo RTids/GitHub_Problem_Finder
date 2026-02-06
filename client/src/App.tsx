@@ -6,9 +6,6 @@ import getUserData from './api/getUserData';
 
 const clientID = import.meta.env.VITE_GITHUB_CLIENT_ID;
 
-//Todo
-//Set different pages for each page in routes folder
-
 function App() {
 	const [accessToken, setAccessToken] = useState(
 		localStorage.getItem('accessToken') || null,

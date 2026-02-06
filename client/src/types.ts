@@ -4,9 +4,11 @@ export type UserData = {
 	avatar_url?: string;
 };
 
-export type IssueData = {
+export type currentIssueData = {
 	name?: string;
+	title?: string;
 	description?: string;
 	url?: string;
 	language?: string;
+	html_url?: string;
 };
