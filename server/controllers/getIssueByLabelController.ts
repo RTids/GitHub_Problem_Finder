@@ -15,6 +15,7 @@ export const getIssueByLabel = async (req: any, res: any) => {
 			'label:"good first issue"',
 			'state:open',
 			'is:issue',
+			'assignee:none',
 		].join(' '),
 	});
 	const cached = await redis.get(language.toLowerCase());
