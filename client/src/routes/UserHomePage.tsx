@@ -1,6 +1,6 @@
 // UserHomePage.tsx
 import type { UserData } from '../types';
-import NewIssue from '../components/NewIssue';
+import NewIssue from '../components/IssueModal';
 
 type UserHomePageProps = {
 	logOut: () => void;

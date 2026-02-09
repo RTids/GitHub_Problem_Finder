@@ -1,17 +1,16 @@
 import getIssueByLabel from '../api/getIssesByLabel';
 import { useState, useEffect } from 'react';
 import type { currentIssueData } from '../types';
+import Issue from './Issue';
 
-export default function NewIssue() {
+export default function IssueModal() {
 	const [issueData, setIssueData] = useState<IssueData | null>(null);
-	const [currentIssue, setCurrentIssue] = useState<currentIssueData | null>(
-		null,
-	);
 	const [language, setLanguage] = useState<string | null>(null);
 	const [loading, setLoading] = useState<Loading | true>(true);
+	const [issueNumber, setIssueNumber] = useState<number>(0);
 
 	type IssueData = {
-		items?: Array<object>;
+		items?: currentIssueData[];
 	};
 
 	type Loading = boolean;
@@ -20,13 +19,22 @@ export default function NewIssue() {
 		async function fetchIssueData() {
 			const issues = await getIssueByLabel();
 			setIssueData(issues);
-			setCurrentIssue(issues.items[0]);
 			setLoading(false);
 		}
 		fetchIssueData();
 	}, []);
 
-	console.log(currentIssue);
+	function nextIssue() {
+		setIssueNumber((prev) =>
+			issueData && prev < (issueData.items?.length ?? 1) - 1 ? prev + 1 : prev,
+		);
+	}
+
+	function prevIssue() {
+		setIssueNumber((prev) => (prev > 0 ? prev - 1 : 0));
+	}
+
+	const currentIssue = issueData?.items?.[issueNumber] ?? null;
 
 	return (
 		<>
@@ -35,12 +43,11 @@ export default function NewIssue() {
 				{loading ? (
 					<p>Loading issue</p>
 				) : (
-					<div>
-						<p>{currentIssue?.title}</p>
-						<a href={currentIssue?.html_url} target='_blank'>
-							Link to problem.
-						</a>
-					</div>
+					<Issue
+						currentIssue={currentIssue}
+						nextIssue={nextIssue}
+						prevIssue={prevIssue}
+					/>
 				)}
 			</div>
 		</>
