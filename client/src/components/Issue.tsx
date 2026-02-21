@@ -1,4 +1,5 @@
 import type { currentIssueData } from '../types';
+import { formatDistanceToNow } from 'date-fns';
 
 type IssueProps = {
 	currentIssue: currentIssueData | null;
@@ -16,6 +17,14 @@ export default function Issue({
 			<div>
 				<h3>{currentIssue?.title}</h3>
 				<p>{currentIssue?.description}</p>
+				<p>
+					Posted{' '}
+					{currentIssue?.created_at
+						? formatDistanceToNow(new Date(currentIssue.created_at), {
+								addSuffix: true,
+							})
+						: ''}
+				</p>
 				<a target='_blank' href={currentIssue?.html_url}>
 					Link to issue
 				</a>

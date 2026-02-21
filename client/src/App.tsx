@@ -47,7 +47,7 @@ function App() {
 			}
 			getAccessToken();
 		}
-	}, []);
+	}, [accessToken]);
 
 	useEffect(() => {
 		if (!accessToken) return;
@@ -66,12 +66,13 @@ function App() {
 
 	return (
 		<div className='w-full flex flex-col justify-center items-center'>
-			<NavBar userData={userData} logOut={logOut} />
+			<NavBar userData={userData} logOut={logOut} logIn={logInWithGitHub} />
 			{accessToken ? (
 				<UserHomePage logOut={logOut} userData={userData} />
 			) : (
 				<>
-					<button onClick={logInWithGitHub}>Sign In with GitHub modal</button>
+					<h1>Welcome to the GitHub Problem Finder!</h1>
+					<h2>Sign in with Github in the top right to continue.</h2>
 				</>
 			)}
 		</div>

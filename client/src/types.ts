@@ -11,4 +11,5 @@ export type currentIssueData = {
 	url?: string;
 	language?: string;
 	html_url?: string;
+	created_at?: Date;
 };

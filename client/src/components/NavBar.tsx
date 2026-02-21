@@ -2,10 +2,11 @@ import type { UserData } from '../types';
 
 type NavBarProps = {
 	logOut: () => void;
+	logIn: () => void;
 	userData: UserData | null;
 };
 
-export default function NavBar({ userData, logOut }: NavBarProps) {
+export default function NavBar({ userData, logIn, logOut }: NavBarProps) {
 	return (
 		<nav className='fixed top-0 h-32 w-full flex flex-row justify-around items-center'>
 			<div className='w-100'></div>
@@ -23,7 +24,7 @@ export default function NavBar({ userData, logOut }: NavBarProps) {
 						</div>
 					</div>
 				) : (
-					<button>Log In</button>
+					<button onClick={logIn}>Sign In with GitHub</button>
 				)}
 			</div>
 		</nav>
