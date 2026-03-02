@@ -8,7 +8,7 @@ type NavBarProps = {
 
 export default function NavBar({ userData, logIn, logOut }: NavBarProps) {
 	return (
-		<nav className='sticky top-0 h-20 w-full flex flex-row justify-around items-center border-b bg-[#151b23]'>
+		<nav className='sticky top-0 h-20 w-full flex flex-row justify-around items-center border-b bg-[#151b23] z-50'>
 			<div className='w-100'></div>
 			<h1 className='w-100'>GitHub Problem Finder</h1>
 			<div className='w-100'>

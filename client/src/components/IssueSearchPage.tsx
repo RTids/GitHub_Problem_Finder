@@ -16,6 +16,7 @@ export default function IssueSearchPage() {
 
 	useEffect(() => {
 		async function fetchIssueData() {
+			setLoading(true);
 			const issues = await getIssueByLabel(language);
 			setIssueData(issues);
 			setLoading(false);

@@ -22,7 +22,43 @@ export const getIssueByLabel = async (req: any, res: any) => {
 
 	if (cached) {
 		console.log('Fetching from cache');
+		refreshCache(language, authHeader);
 		return res.json(JSON.parse(cached));
+	}
+
+	async function refreshCache(language: string, authHeader: string) {
+		try {
+			const params = new URLSearchParams({
+				q: [
+					`language:${language}`,
+					'label:"good first issue"',
+					'state:open',
+					'is:issue',
+					'no:assignee',
+				].join(' '),
+				per_page: '100',
+				page: '1',
+			});
+
+			const response = await fetch(
+				'https://api.github.com/search/issues?' + params,
+				{
+					headers: {
+						Authorization: authHeader,
+						Accept: 'application/vnd.github+json',
+						'User-Agent': 'easy-issues-finder',
+					},
+				},
+			);
+
+			const data = await response.json();
+
+			await redis.set(language.toLowerCase(), JSON.stringify(data), 'EX', 300);
+
+			console.log('Cache refreshed');
+		} catch (err) {
+			console.error('Background refresh failed', err);
+		}
 	}
 
 	if (!authHeader) {
