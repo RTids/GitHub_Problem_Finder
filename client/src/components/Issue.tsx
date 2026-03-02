@@ -1,36 +1,29 @@
+import { formatDistanceToNowStrict } from 'date-fns';
 import type { currentIssueData } from '../types';
-import { formatDistanceToNow } from 'date-fns';
+
+//Icons
+import { IoMdTime } from 'react-icons/io';
 
 type IssueProps = {
-	currentIssue: currentIssueData | null;
-	nextIssue: () => void;
-	prevIssue: () => void;
+	issue: currentIssueData; // single issue
 };
 
-export default function Issue({
-	currentIssue,
-	nextIssue,
-	prevIssue,
-}: IssueProps) {
+export default function IssueList({ issue }: IssueProps) {
 	return (
-		<div>
-			<div>
-				<h3>{currentIssue?.title}</h3>
-				<p>{currentIssue?.description}</p>
-				<p>
-					Posted{' '}
-					{currentIssue?.created_at
-						? formatDistanceToNow(new Date(currentIssue.created_at), {
-								addSuffix: true,
-							})
-						: ''}
-				</p>
-				<a target='_blank' href={currentIssue?.html_url}>
-					Link to issue
-				</a>
-			</div>
-			<button onClick={prevIssue}>Previous Issue</button>
-			<button onClick={nextIssue}>Next Issue</button>
+		<div className='border-2 border-solid border-[#3D444D] h-90 w-70 rounded hover:border-white hover:cursor-pointer'>
+			<h3>{issue?.title}</h3>
+			<p>{issue?.description}</p>
+			<p className='flex flex-row items-center justify-center gap-1 font-light text-xs'>
+				<IoMdTime />
+				{issue?.created_at
+					? formatDistanceToNowStrict(new Date(issue.created_at), {
+							addSuffix: true,
+						})
+					: ''}
+			</p>
+			<a target='_blank' href={issue?.html_url}>
+				Link to issue
+			</a>
 		</div>
 	);
 }

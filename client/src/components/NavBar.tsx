@@ -8,7 +8,7 @@ type NavBarProps = {
 
 export default function NavBar({ userData, logIn, logOut }: NavBarProps) {
 	return (
-		<nav className='fixed top-0 h-32 w-full flex flex-row justify-around items-center'>
+		<nav className='sticky top-0 h-20 w-full flex flex-row justify-around items-center border-b bg-[#151b23]'>
 			<div className='w-100'></div>
 			<h1 className='w-100'>GitHub Problem Finder</h1>
 			<div className='w-100'>
@@ -18,7 +18,7 @@ export default function NavBar({ userData, logIn, logOut }: NavBarProps) {
 						<div className='flex flex-row justify-evenly items-center gap-5'>
 							<h3>{userData.name}</h3>
 							<img
-								className='rounded-full h-16 w-16 cursor-pointer'
+								className='rounded-full h-12 w-12 cursor-pointer'
 								src={userData?.avatar_url}
 							></img>
 						</div>

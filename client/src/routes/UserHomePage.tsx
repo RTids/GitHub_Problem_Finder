@@ -1,6 +1,6 @@
 // UserHomePage.tsx
 import type { UserData } from '../types';
-import NewIssue from '../components/IssueModal';
+import IssueSearchPage from '../components/IssueSearchPage';
 
 type UserHomePageProps = {
 	logOut: () => void;
@@ -9,9 +9,9 @@ type UserHomePageProps = {
 
 export default function UserHomePage({ logOut, userData }: UserHomePageProps) {
 	return (
-		<>
-			<NewIssue />
+		<div className='w-full'>
+			<IssueSearchPage />
 			<button onClick={logOut}>Log Out</button>
-		</>
+		</div>
 	);
 }

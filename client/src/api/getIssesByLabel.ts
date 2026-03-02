@@ -1,6 +1,4 @@
-export default async function getIssueByLabel() {
-	const language = 'javascript';
-
+export default async function getIssueByLabel(language: string) {
 	const response = await fetch(
 		`${import.meta.env.VITE_API_BASE_URL}/getIssueByLabel?language=${language}`,
 		{
