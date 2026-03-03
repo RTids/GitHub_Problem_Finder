@@ -1,4 +1,3 @@
-// UserHomePage.tsx
 import type { UserData } from '../types';
 import IssueSearchPage from '../components/IssueSearchPage';
 
@@ -7,7 +6,7 @@ type UserHomePageProps = {
 	userData: UserData | null;
 };
 
-export default function UserHomePage({ logOut, userData }: UserHomePageProps) {
+export default function UserHomePage({ logOut }: UserHomePageProps) {
 	return (
 		<div className='w-full'>
 			<IssueSearchPage />

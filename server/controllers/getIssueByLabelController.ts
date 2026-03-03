@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import Redis from 'ioredis';
+import checkEnglish from '../helpers/checkEnglish.ts';
 
 const redis = new Redis();
 
@@ -17,6 +18,8 @@ export const getIssueByLabel = async (req: any, res: any) => {
 			'is:issue',
 			'no:assignee',
 		].join(' '),
+		per_page: '100',
+		page: '1',
 	});
 	const cached = await redis.get(language.toLowerCase());
 
@@ -51,9 +54,20 @@ export const getIssueByLabel = async (req: any, res: any) => {
 				},
 			);
 
-			const data = await response.json();
+			const data: any = await response.json();
+			const engData = await checkEnglish(data.items);
 
-			await redis.set(language.toLowerCase(), JSON.stringify(data), 'EX', 300);
+			const cacheData = {
+				...data,
+				items: engData,
+			};
+
+			await redis.set(
+				language.toLowerCase(),
+				JSON.stringify(cacheData),
+				'EX',
+				300,
+			);
 
 			console.log('Cache refreshed');
 		} catch (err) {
@@ -83,9 +97,23 @@ export const getIssueByLabel = async (req: any, res: any) => {
 			return res.status(response.status).json({ error });
 		}
 
-		const data = await response.json();
-		await redis.set(language.toLowerCase(), JSON.stringify(data), 'EX', 300);
-		res.json(data);
+		const data: any = await response.json();
+		const engData = await checkEnglish(data.items);
+		const cacheData = {
+			...data,
+			items: engData,
+		};
+
+		await redis.set(
+			language.toLowerCase(),
+			JSON.stringify(cacheData),
+			'EX',
+			300,
+		);
+		res.json({
+			...data,
+			items: engData,
+		});
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ message: 'Failed to fetch issues data' });
