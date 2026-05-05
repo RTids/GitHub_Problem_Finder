@@ -1,4 +1,4 @@
-import getIssueByLabel from '../api/getIssesByLabel';
+import getIssueByLabel from '../api/getIssuesByLabel';
 import { useState, useEffect } from 'react';
 import type { currentIssueData } from '../types';
 import IssueList from './IssueList';
@@ -20,23 +20,28 @@ export default function IssueSearchPage() {
 			const issues = await getIssueByLabel(language);
 			setIssueData(issues);
 			setLoading(false);
+			console.log(issues);
 		}
 		fetchIssueData();
 	}, [language]);
 
 	return (
 		<div className='mt-15'>
-			<h4>
-				You are currently searching Github for issues for
-				<select
-					name='languages'
-					id='language-selection'
-					value={language}
-					onChange={(e) => setLanguage(e.target.value)}
-				>
-					<option value='javascript'>Javascript</option>
-					<option value='python'>Python</option>
-				</select>
+			<h4 className='mb-3'>
+				You are currently searching Github for issues for{' '}
+				<span>
+					<select
+						name='languages'
+						id='language-selection'
+						value={language}
+						onChange={(e) => setLanguage(e.target.value)}
+					>
+						<option value='javascript'>Javascript</option>
+						<option value='python'>Python</option>
+						<option value='typescript'>Typescript</option>
+						<option value='java'>Java</option>
+					</select>
+				</span>
 			</h4>
 			<div>
 				{loading ? (

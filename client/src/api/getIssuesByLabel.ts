@@ -11,6 +11,5 @@ export default async function getIssueByLabel(language: string) {
 	if (!response.ok) {
 		throw new Error('Failed to fetch Github issues data');
 	}
-
 	return response.json();
 }

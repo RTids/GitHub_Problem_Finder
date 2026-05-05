@@ -3,12 +3,27 @@ export type UserData = {
 	avatar_url?: string;
 };
 
+export type GitHubUser = {
+	login: string;
+	avatar_url: string;
+};
+
+export type GithubLabel = {
+	id: number;
+	color: string;
+	name: string;
+};
+
 export type currentIssueData = {
-	name?: string;
-	title?: string;
+	name: string;
+	title: string;
 	description?: string;
-	url?: string;
-	language?: string;
-	html_url?: string;
-	created_at?: Date;
+	url: string;
+	language: string;
+	html_url: string;
+	created_at: Date;
+	number: number;
+	user: GitHubUser;
+	body?: string;
+	labels?: GithubLabel[];
 };
