@@ -20,7 +20,10 @@ function getContrastColor(hex: string) {
 
 export default function IssueList({ issue }: IssueProps) {
 	return (
-		<div className='border-2 border-solid border-[#3D444D] h-90 w-70 rounded hover:border-white hover:cursor-pointer relative'>
+		<div
+			className='border-2 border-solid border-[#3D444D] h-90 w-70 rounded hover:border-white hover:cursor-pointer relative'
+			key={issue?.id}
+		>
 			<a
 				target='_blank'
 				href={issue?.html_url}

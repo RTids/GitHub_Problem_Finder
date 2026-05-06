@@ -1,29 +1,10 @@
-import getIssueByLabel from '../api/getIssuesByLabel';
-import { useState, useEffect } from 'react';
-import type { currentIssueData } from '../types';
+import { useState } from 'react';
 import IssueList from './IssueList';
+import useIssues from '../hooks/useIssues';
 
 export default function IssueSearchPage() {
-	const [issueData, setIssueData] = useState<IssueData | null>(null);
 	const [language, setLanguage] = useState<string>('javascript');
-	const [loading, setLoading] = useState<Loading | true>(true);
-
-	type IssueData = {
-		items?: currentIssueData[];
-	};
-
-	type Loading = boolean;
-
-	useEffect(() => {
-		async function fetchIssueData() {
-			setLoading(true);
-			const issues = await getIssueByLabel(language);
-			setIssueData(issues);
-			setLoading(false);
-			console.log(issues);
-		}
-		fetchIssueData();
-	}, [language]);
+	const { loading, data, error } = useIssues(language);
 
 	return (
 		<div className='mt-15'>
@@ -44,11 +25,9 @@ export default function IssueSearchPage() {
 				</span>
 			</h4>
 			<div>
-				{loading ? (
-					<p>Loading issue</p>
-				) : (
-					<IssueList issueData={issueData?.items || null} />
-				)}
+				{loading && <p>Loading issue</p>}
+				{error && <p className='text-red-500'>{error}</p>}
+				{!loading && !error && <IssueList issueData={data?.items || null} />}
 			</div>
 		</div>
 	);

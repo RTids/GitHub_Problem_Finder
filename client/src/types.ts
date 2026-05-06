@@ -26,4 +26,5 @@ export type currentIssueData = {
 	user: GitHubUser;
 	body?: string;
 	labels?: GithubLabel[];
+	id: number;
 };
