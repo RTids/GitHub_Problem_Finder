@@ -23,6 +23,7 @@ function stripMarkdown(text: string): string {
 		.replace(/#{1,6}\s/g, '') // removes ## headings
 		.replace(/\*\*(.*?)\*\*/g, '$1') // removes **bold**
 		.replace(/\n/g, ' ') // removes line breaks
+		.replace(/<[^>]*>/g, '') // removes <any> html tags
 		.trim();
 }
 
