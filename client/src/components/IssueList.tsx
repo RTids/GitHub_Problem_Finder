@@ -1,11 +1,7 @@
-import type { currentIssueData } from '../types';
+import type { IssueList } from '../types';
 import Issue from './Issue';
 
-type IssueListProps = {
-	issueData: currentIssueData[] | null;
-};
-
-export default function IssueList({ issueData }: IssueListProps) {
+export default function IssueList({ issueData }: IssueList) {
 	if (!issueData || issueData.length === 0) return <p>No issues found</p>;
 
 	return (

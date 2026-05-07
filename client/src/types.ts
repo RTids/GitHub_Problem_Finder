@@ -14,7 +14,7 @@ export type GithubLabel = {
 	name: string;
 };
 
-export type currentIssueData = {
+export type CurrentIssueData = {
 	name: string;
 	title: string;
 	description?: string;
@@ -27,4 +27,12 @@ export type currentIssueData = {
 	body?: string;
 	labels?: GithubLabel[];
 	id: number;
+};
+
+export type SingleIssue = {
+	issue: CurrentIssueData;
+};
+
+export type IssueList = {
+	issueData: CurrentIssueData[] | null;
 };
