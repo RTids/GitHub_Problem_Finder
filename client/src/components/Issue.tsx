@@ -49,12 +49,12 @@ export default function IssueList({ issue }: SingleIssue) {
 						className='h-5 w-5 rounded-full'
 						src={issue.user?.avatar_url}
 					></img>
-					<p className='text-xs font-thin'>{issue.user.login}</p>
+					<p className='text-xs font-thin max-w-3'>{issue.user.login}</p>
 				</div>
 				<p className='font-thin text-xs absolute bottom-3 right-3'>
 					#{issue?.number}
 				</p>
-				<p className='flex flex-row items-center justify-center gap-1 font-thin text-xs absolute bottom-3 right-15'>
+				<p className='flex flex-row items-center justify-center gap-1 font-thin text-xs absolute bottom-3 right-12'>
 					<IoMdTime />
 					{issue.created_at
 						? formatDistanceToNowStrict(new Date(issue.created_at), {

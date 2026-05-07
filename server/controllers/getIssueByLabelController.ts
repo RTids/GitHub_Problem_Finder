@@ -9,6 +9,9 @@ const redis = new Redis();
 
 export const getIssueByLabel = async (req: any, res: any) => {
 	const authHeader = req.get('Authorization');
+	if (!authHeader) {
+		return res.status(401).json({ message: 'Missing Authorization header' });
+	}
 	const { language } = req.query;
 	const params = new URLSearchParams({
 		q: [
@@ -25,7 +28,11 @@ export const getIssueByLabel = async (req: any, res: any) => {
 
 	if (cached) {
 		console.log('Fetching from cache');
-		refreshCache(language, authHeader);
+		// Only refresh if TTL is below a threshold (e.g. < 60s remaining of 300s TTL)
+		const ttl = await redis.ttl(language.toLowerCase());
+		if (ttl < 60) {
+			refreshCache(language, authHeader); // background refresh near expiry
+		}
 		return res.json(JSON.parse(cached));
 	}
 
@@ -73,10 +80,6 @@ export const getIssueByLabel = async (req: any, res: any) => {
 		} catch (err) {
 			console.error('Background refresh failed', err);
 		}
-	}
-
-	if (!authHeader) {
-		return res.status(401).json({ message: 'Missing Authorization header' });
 	}
 
 	try {

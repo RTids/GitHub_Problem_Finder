@@ -7,8 +7,8 @@ export default function IssueSearchPage() {
 	const { loading, data, error } = useIssues(language);
 
 	return (
-		<div className='mt-15'>
-			<h4 className='mb-3'>
+		<div className='mt-10'>
+			<h4 className='mb-10'>
 				You are currently searching Github for issues for{' '}
 				<span>
 					<select
