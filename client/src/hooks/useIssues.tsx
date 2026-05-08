@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import getIssueByLabel from '../api/getIssuesByLabel';
-import type { currentIssueData } from '../types';
+import type { CurrentIssueData } from '../types';
 
 type IssueData = {
-	items?: currentIssueData[];
+	items?: CurrentIssueData[];
 };
 
 type FetchState = {

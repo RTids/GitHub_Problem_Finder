@@ -6,6 +6,7 @@ interface Issue {
 }
 
 export default async function checkEnglish(issues: Issue[]) {
+	if (!Array.isArray(issues)) return [];
 	const nonEnglishLang = ['kor', 'jpn', 'chi', 'rus'];
 	const filteredArray: Issue[] = [];
 	for (let issue of issues) {

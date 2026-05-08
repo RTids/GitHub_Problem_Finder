@@ -61,6 +61,14 @@ export const getIssueByLabel = async (req: any, res: any) => {
 				},
 			);
 
+			if (!response.ok) {
+				console.error(
+					'Background refresh failed: GitHub returned',
+					response.status,
+				);
+				return;
+			}
+
 			const data: any = await response.json();
 			const engData = await checkEnglish(data.items);
 

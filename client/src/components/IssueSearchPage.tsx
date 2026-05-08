@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useReducer } from 'react';
 import IssueList from './IssueList';
 import useIssues from '../hooks/useIssues';
+import { filterReducer, initialState } from '../reducers/filterReducer';
 
 const LANGUAGES = [
 	{ value: 'javascript', label: 'JavaScript' },
@@ -12,11 +13,12 @@ const LANGUAGES = [
 ];
 
 export default function IssueSearchPage() {
-	const [language, setLanguage] = useState<string>('javascript');
-	const { loading, data, error } = useIssues(language);
+	const [filters, dispatch] = useReducer(filterReducer, initialState);
+	const { loading, data, error } = useIssues(filters.language);
 
 	const currentLabel =
-		LANGUAGES.find((l) => l.value === language)?.label ?? language;
+		LANGUAGES.find((l) => l.value === filters.language)?.label ??
+		filters.language;
 
 	return (
 		<div className='min-h-screen bg-neutral-50 dark:bg-neutral-950'>
@@ -29,8 +31,10 @@ export default function IssueSearchPage() {
 					<select
 						name='languages'
 						id='language-selection'
-						value={language}
-						onChange={(e) => setLanguage(e.target.value)}
+						value={filters.language}
+						onChange={(e) =>
+							dispatch({ type: 'SET_LANGUAGE', payload: e.target.value })
+						}
 						className='appearance-none bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-900 dark:text-neutral-100 text-sm font-medium rounded-full pl-3 pr-8 py-1.5 cursor-pointer hover:border-neutral-400 dark:hover:border-neutral-500 transition-colors focus:outline-none'
 					>
 						{LANGUAGES.map((l) => (
