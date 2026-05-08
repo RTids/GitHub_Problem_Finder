@@ -1,4 +1,5 @@
 import type { UserData } from '../types';
+import { useDropDown } from '../hooks/useDropDown';
 
 type NavBarProps = {
 	logOut: () => void;
@@ -7,6 +8,7 @@ type NavBarProps = {
 };
 
 export default function NavBar({ userData, logIn, logOut }: NavBarProps) {
+	const { isOpen, toggle, close, ref } = useDropDown();
 	return (
 		<nav className='sticky top-0 z-50 h-14 w-full flex items-center justify-between px-6 bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800'>
 			{/* Logo */}
@@ -34,16 +36,22 @@ export default function NavBar({ userData, logIn, logOut }: NavBarProps) {
 					<span className='text-sm text-neutral-500 dark:text-neutral-400 hidden sm:block'>
 						{userData.name}
 					</span>
-					<div className='relative group'>
+					<div className='relative' ref={ref}>
 						<img
 							className='rounded-full h-8 w-8 cursor-pointer ring-1 ring-neutral-200 dark:ring-neutral-700 hover:ring-neutral-400 dark:hover:ring-neutral-500 transition-all'
 							src={userData.avatar_url}
 							alt={userData.name}
+							onClick={toggle}
 						/>
 						{/* Dropdown */}
-						<div className='absolute right-0 top-9 w-36 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg shadow-sm opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-200 grid place-content-center'>
+						<div
+							className={`absolute right-0 top-9 w-36 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg shadow-sm opacity-0 transition-opacity duration-200 ${isOpen ? 'opacity-100 pointer-events-auto hover:cursor-pointer' : 'opacity-0 pointer-events-none'}`}
+						>
 							<button
-								onClick={logOut}
+								onClick={() => {
+									logOut();
+									close();
+								}}
 								className='w-full text-left text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 px-3 py-2 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors hover:cursor-pointer'
 							>
 								Sign out
