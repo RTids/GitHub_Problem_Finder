@@ -1,16 +1,9 @@
-import type { UserData } from '../types';
 import IssueSearchPage from '../components/IssueSearchPage';
 
-type UserHomePageProps = {
-	logOut: () => void;
-	userData: UserData | null;
-};
-
-export default function UserHomePage({ logOut }: UserHomePageProps) {
+export default function UserHomePage() {
 	return (
 		<div className='w-full'>
 			<IssueSearchPage />
-			<button onClick={logOut}>Log Out</button>
 		</div>
 	);
 }

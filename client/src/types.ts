@@ -35,4 +35,11 @@ export type SingleIssue = {
 
 export type IssueList = {
 	issueData: CurrentIssueData[] | null;
+	page: number | 1;
+	totalPages: number;
+	totalCount: number;
+	perPage: number | 10;
+	onNext: () => void;
+	onPrev: () => void;
+	onPageSelect: (page: number) => void;
 };

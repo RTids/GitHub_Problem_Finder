@@ -12,7 +12,7 @@ export const getIssueByLabel = async (req: any, res: any) => {
 	if (!authHeader) {
 		return res.status(401).json({ message: 'Missing Authorization header' });
 	}
-	const { language } = req.query;
+	const { language, per_page, page } = req.query;
 	const params = new URLSearchParams({
 		q: [
 			`language:${language}`,
@@ -21,22 +21,30 @@ export const getIssueByLabel = async (req: any, res: any) => {
 			'is:issue',
 			'no:assignee',
 		].join(' '),
-		per_page: '100',
-		page: '1',
+		per_page: per_page.toString(),
+		page: page.toString(),
 	});
-	const cached = await redis.get(language.toLowerCase());
+
+	//Get correct result cache result
+	const cacheKey = `${language.toLowerCase()}-${per_page}-${page}`;
+	const cached = await redis.get(cacheKey);
 
 	if (cached) {
 		console.log('Fetching from cache');
 		// Only refresh if TTL is below a threshold (e.g. < 60s remaining of 300s TTL)
-		const ttl = await redis.ttl(language.toLowerCase());
+		const ttl = await redis.ttl(cacheKey);
 		if (ttl < 60) {
-			refreshCache(language, authHeader); // background refresh near expiry
+			refreshCache(language, per_page, page, authHeader); // background refresh near expiry
 		}
 		return res.json(JSON.parse(cached));
 	}
 
-	async function refreshCache(language: string, authHeader: string) {
+	async function refreshCache(
+		language: string,
+		per_page: number,
+		page: number,
+		authHeader: string,
+	) {
 		try {
 			const params = new URLSearchParams({
 				q: [
@@ -46,8 +54,8 @@ export const getIssueByLabel = async (req: any, res: any) => {
 					'is:issue',
 					'no:assignee',
 				].join(' '),
-				per_page: '100',
-				page: '1',
+				per_page: per_page.toString(),
+				page: page.toString(),
 			});
 
 			const response = await fetch(
@@ -78,7 +86,7 @@ export const getIssueByLabel = async (req: any, res: any) => {
 			};
 
 			await redis.set(
-				language.toLowerCase(),
+				`${language.toLowerCase()}-${per_page}-${page}`,
 				JSON.stringify(cacheData),
 				'EX',
 				300,
@@ -115,12 +123,7 @@ export const getIssueByLabel = async (req: any, res: any) => {
 			items: engData,
 		};
 
-		await redis.set(
-			language.toLowerCase(),
-			JSON.stringify(cacheData),
-			'EX',
-			300,
-		);
+		await redis.set(cacheKey, JSON.stringify(cacheData), 'EX', 300);
 		res.json({
 			...data,
 			items: engData,

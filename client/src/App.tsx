@@ -68,7 +68,7 @@ function App() {
 		<div className='w-full flex flex-col justify-center items-center'>
 			<NavBar userData={userData} logOut={logOut} logIn={logInWithGitHub} />
 			{accessToken ? (
-				<UserHomePage logOut={logOut} userData={userData} />
+				<UserHomePage />
 			) : (
 				<>
 					<h1>Welcome to the GitHub Problem Finder!</h1>

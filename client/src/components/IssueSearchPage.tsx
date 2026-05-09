@@ -14,11 +14,17 @@ const LANGUAGES = [
 
 export default function IssueSearchPage() {
 	const [filters, dispatch] = useReducer(filterReducer, initialState);
-	const { loading, data, error } = useIssues(filters.language);
+	const { loading, data, error } = useIssues(
+		filters.language,
+		filters.per_page,
+		filters.page,
+	);
 
 	const currentLabel =
 		LANGUAGES.find((l) => l.value === filters.language)?.label ??
 		filters.language;
+
+	const totalPages = Math.ceil((data?.total_count ?? 0) / filters.per_page);
 
 	return (
 		<div className='min-h-screen bg-neutral-50 dark:bg-neutral-950'>
@@ -87,7 +93,18 @@ export default function IssueSearchPage() {
 				</div>
 			)}
 
-			{!loading && !error && <IssueList issueData={data?.items || null} />}
+			{!loading && !error && (
+				<IssueList
+					issueData={data?.items || null}
+					page={filters.page}
+					totalPages={totalPages}
+					totalCount={data?.total_count ?? 0}
+					perPage={filters.per_page}
+					onNext={() => dispatch({ type: 'NEXT_PAGE' })}
+					onPrev={() => dispatch({ type: 'PREV_PAGE' })}
+					onPageSelect={(p) => dispatch({ type: 'SET_PAGE', payload: p })}
+				/>
+			)}
 		</div>
 	);
 }

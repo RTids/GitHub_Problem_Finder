@@ -1,6 +1,10 @@
-export default async function getIssueByLabel(language: string) {
+export default async function getIssueByLabel(
+	language: string,
+	per_page: number,
+	page: number,
+) {
 	const response = await fetch(
-		`${import.meta.env.VITE_API_BASE_URL}/getIssueByLabel?language=${language}`,
+		`${import.meta.env.VITE_API_BASE_URL}/getIssueByLabel?language=${language}&per_page=${per_page}&page=${page}`,
 		{
 			method: 'GET',
 			headers: {
