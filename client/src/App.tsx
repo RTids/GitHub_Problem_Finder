@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import UserHomePage from './routes/UserHomePage';
 import NavBar from './components/NavBar';
 import getUserData from './api/getUserData';
+import { SavedIssuesProvider } from './providers/savedIssuesProvider';
 
 const clientID = import.meta.env.VITE_GITHUB_CLIENT_ID;
 
@@ -65,17 +66,19 @@ function App() {
 	};
 
 	return (
-		<div className='w-full flex flex-col justify-center items-center'>
-			<NavBar userData={userData} logOut={logOut} logIn={logInWithGitHub} />
-			{accessToken ? (
-				<UserHomePage />
-			) : (
-				<>
-					<h1>Welcome to the GitHub Problem Finder!</h1>
-					<h2>Sign in with Github in the top right to continue.</h2>
-				</>
-			)}
-		</div>
+		<SavedIssuesProvider>
+			<div className='w-full flex flex-col justify-center items-center'>
+				<NavBar userData={userData} logOut={logOut} logIn={logInWithGitHub} />
+				{accessToken ? (
+					<UserHomePage />
+				) : (
+					<>
+						<h1>Welcome to the GitHub Problem Finder!</h1>
+						<h2>Sign in with Github in the top right to continue.</h2>
+					</>
+				)}
+			</div>
+		</SavedIssuesProvider>
 	);
 }
 
