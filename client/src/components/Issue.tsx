@@ -34,7 +34,7 @@ export default function IssueList({ issue }: SingleIssue) {
 			</h2>
 
 			{/* Body */}
-			<p className='text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed line-clamp-3 flex-1'>
+			<p className='text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed line-clamp-3 flex-1 overflow-scroll'>
 				{issue.body ? stripMarkdown(issue.body) : 'No description provided.'}
 			</p>
 
