@@ -24,7 +24,11 @@ export default function IssueSearchPage() {
 		LANGUAGES.find((l) => l.value === filters.language)?.label ??
 		filters.language;
 
-	const totalPages = Math.ceil((data?.total_count ?? 0) / filters.per_page);
+	const GITHUB_MAX_RESULTS = 1000;
+	const realTotal = data?.total_count ?? 0;
+	const accessibleCount = Math.min(realTotal, GITHUB_MAX_RESULTS);
+
+	const totalPages = Math.ceil(accessibleCount / filters.per_page);
 
 	return (
 		<div className='min-h-screen bg-neutral-50 dark:bg-neutral-950'>
@@ -89,7 +93,9 @@ export default function IssueSearchPage() {
 
 			{error && (
 				<div className='mx-6 mt-6 px-4 py-3 rounded-lg bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 text-sm text-red-600 dark:text-red-400'>
-					{error}
+					{error === 'GitHub only allows access to the first 1000 results.'
+						? 'GitHub limits search results to the first 1000. Try filtering by language or label to narrow your results.'
+						: error}
 				</div>
 			)}
 
@@ -98,7 +104,7 @@ export default function IssueSearchPage() {
 					issueData={data?.items || null}
 					page={filters.page}
 					totalPages={totalPages}
-					totalCount={data?.total_count ?? 0}
+					totalCount={accessibleCount}
 					perPage={filters.per_page}
 					onNext={() => dispatch({ type: 'NEXT_PAGE' })}
 					onPrev={() => dispatch({ type: 'PREV_PAGE' })}

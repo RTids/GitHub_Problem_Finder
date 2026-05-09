@@ -46,7 +46,7 @@ export default function IssueList({
 			<p className='text-xs text-neutral-400 dark:text-neutral-500 mb-4'>
 				Showing {(page - 1) * perPage + 1}–
 				{Math.min(page * perPage, totalCount)} of {totalCount.toLocaleString()}{' '}
-				issues
+				results
 			</p>
 
 			{/* Issue grid */}

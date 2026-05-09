@@ -13,6 +13,15 @@ export const getIssueByLabel = async (req: any, res: any) => {
 		return res.status(401).json({ message: 'Missing Authorization header' });
 	}
 	const { language, per_page, page } = req.query;
+
+	const pageNum = parseInt(page as string, 10);
+	const perPageNum = parseInt(per_page as string, 10);
+
+	if ((pageNum - 1) * perPageNum >= 1000) {
+		return res.status(422).json({
+			error: 'GitHub only allows access to the first 1000 results.',
+		});
+	}
 	const params = new URLSearchParams({
 		q: [
 			`language:${language}`,
