@@ -15,8 +15,5 @@ export default function useSavedIssues() {
 		}
 	};
 
-	//This custom hook with use a useEffect to pull the saved issues from local storage and then return them.
-	//I will also have the toggleFavorite function in here as well. If already in savedIssues then remove it. Else add it.
-
 	return { savedIssues, isSaved, toggleSaved };
 }
