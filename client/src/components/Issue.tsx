@@ -12,7 +12,7 @@ export default function IssueList({ issue }: SingleIssue) {
 	const { isSaved, toggleSaved } = context;
 	return (
 		<div
-			className='group flex flex-col gap-2.5 rounded-xl p-4 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors duration-150 cursor-pointer'
+			className={`group flex flex-col gap-2.5 rounded-xl p-4 bg-white dark:bg-neutral-900 border ${isSaved(issue.id) ? 'border-amber-700/40 hover:border-amber-300/40' : 'border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600 '} transition-colors duration-150 cursor-pointer`}
 			key={issue.id}
 		>
 			{/* Tags */}
