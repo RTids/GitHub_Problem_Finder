@@ -6,6 +6,7 @@ import getUserData from './api/getUserData';
 import { SavedIssuesProvider } from './providers/savedIssuesProvider';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SavedIssuesPage from './components/SavedIssues';
+import AssignedIssuesPage from './components/AssignedIssues';
 
 const clientID = import.meta.env.VITE_GITHUB_CLIENT_ID;
 
@@ -21,7 +22,7 @@ function App() {
 
 	function logInWithGitHub() {
 		window.location.assign(
-			`https://github.com/login/oauth/authorize?client_id=${clientID}`,
+			`https://github.com/login/oauth/authorize?client_id=${clientID}&scope=repo`,
 		);
 	}
 
@@ -76,6 +77,7 @@ function App() {
 						<Routes>
 							<Route path='/' element={<UserHomePage />} />
 							<Route path='/saved' element={<SavedIssuesPage />} />
+							<Route path='/assigned' element={<AssignedIssuesPage />} />
 						</Routes>
 					) : (
 						<>
