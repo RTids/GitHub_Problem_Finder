@@ -2,7 +2,7 @@ import { formatDistanceToNowStrict } from 'date-fns';
 import type { SingleIssue } from '../types';
 import stripMarkdown from '../helpers/stripMarkdown';
 import { IoMdTime } from 'react-icons/io';
-import { FaRegStar, FaStar } from 'react-icons/fa';
+import { BsBookmarkPlus, BsBookmarkCheckFill } from 'react-icons/bs';
 import { SavedIssuesContext } from '../context/savedIssueContext';
 import { useContext } from 'react';
 
@@ -39,7 +39,7 @@ export default function IssueList({ issue }: SingleIssue) {
 						toggleSaved(issue);
 					}}
 				>
-					{isSaved(issue.id) ? <FaStar /> : <FaRegStar />}
+					{isSaved(issue.id) ? <BsBookmarkCheckFill /> : <BsBookmarkPlus />}
 				</div>
 			</div>
 			<a target='_blank' href={issue.html_url} className='flex flex-col flex-1'>

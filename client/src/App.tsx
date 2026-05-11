@@ -5,7 +5,7 @@ import NavBar from './components/NavBar';
 import getUserData from './api/getUserData';
 import { SavedIssuesProvider } from './providers/savedIssuesProvider';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import SavedIssuesPage from './components/savedIssues';
+import SavedIssuesPage from './components/SavedIssues';
 
 const clientID = import.meta.env.VITE_GITHUB_CLIENT_ID;
 

@@ -27,6 +27,8 @@ export type CurrentIssueData = {
 	body?: string;
 	labels?: GithubLabel[];
 	id: number;
+	assignee?: string;
+	state: string;
 };
 
 export type SingleIssue = {
