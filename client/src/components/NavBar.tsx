@@ -34,7 +34,7 @@ export default function NavBar({ userData, logIn, logOut }: NavBarProps) {
 			</Link>
 
 			<Link
-				to={'/guide'}
+				to={'/getting-started'}
 				className='text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors'
 			>
 				Getting Started

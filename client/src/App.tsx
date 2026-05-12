@@ -7,6 +7,7 @@ import { SavedIssuesProvider } from './providers/savedIssuesProvider';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SavedIssuesPage from './components/SavedIssues';
 import AssignedIssuesPage from './components/AssignedIssues';
+import GettingStartedPage from './components/GettingStartedPage';
 
 const clientID = import.meta.env.VITE_GITHUB_CLIENT_ID;
 
@@ -74,7 +75,7 @@ function App() {
 				<div className='w-full flex flex-col justify-center items-center'>
 					<NavBar userData={userData} logOut={logOut} logIn={logInWithGitHub} />
 					<Routes>
-						<Route path='/guide' element={<h1>Guide</h1>} />
+						<Route path='/getting-started' element={<GettingStartedPage />} />
 						{accessToken ? (
 							<>
 								<Route path='/' element={<UserHomePage />} />
