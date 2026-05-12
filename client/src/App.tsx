@@ -73,18 +73,26 @@ function App() {
 			<SavedIssuesProvider>
 				<div className='w-full flex flex-col justify-center items-center'>
 					<NavBar userData={userData} logOut={logOut} logIn={logInWithGitHub} />
-					{accessToken ? (
-						<Routes>
-							<Route path='/' element={<UserHomePage />} />
-							<Route path='/saved' element={<SavedIssuesPage />} />
-							<Route path='/assigned' element={<AssignedIssuesPage />} />
-						</Routes>
-					) : (
-						<>
-							<h1>Welcome to the GitHub Problem Finder!</h1>
-							<h2>Sign in with Github in the top right to continue.</h2>
-						</>
-					)}
+					<Routes>
+						<Route path='/guide' element={<h1>Guide</h1>} />
+						{accessToken ? (
+							<>
+								<Route path='/' element={<UserHomePage />} />
+								<Route path='/saved' element={<SavedIssuesPage />} />
+								<Route path='/assigned' element={<AssignedIssuesPage />} />
+							</>
+						) : (
+							<Route
+								path='/'
+								element={
+									<>
+										<h1>Welcome to the GitHub Problem Finder!</h1>
+										<h2>Sign in with Github in the top right to continue.</h2>
+									</>
+								}
+							/>
+						)}
+					</Routes>
 				</div>
 			</SavedIssuesProvider>
 		</BrowserRouter>

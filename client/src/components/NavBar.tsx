@@ -33,7 +33,12 @@ export default function NavBar({ userData, logIn, logOut }: NavBarProps) {
 				</div>
 			</Link>
 
-			{/* Right side */}
+			<Link
+				to={'/guide'}
+				className='text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors'
+			>
+				Getting Started
+			</Link>
 			<Link
 				to='/saved'
 				className='text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors'
